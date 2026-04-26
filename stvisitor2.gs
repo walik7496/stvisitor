@@ -1,7 +1,7 @@
-// === НАЛАШТУВАННЯ ===
+// === Settings ===
 var URL = 'https://your-site.com'; // <-- встав свій сайт
 
-// === ОСНОВНА ФУНКЦІЯ ===
+// === MAIN FUNCTION ===
 function pingWebsite() {
   try {
     var response = UrlFetchApp.fetch(URL, {
@@ -15,23 +15,23 @@ function pingWebsite() {
   }
 }
 
-// === СТВОРЕННЯ 2 ВИПАДКОВИХ ТРИГЕРІВ НА ДЕНЬ ===
+// === GENERATION OF 2 RANDOM TRIGGER PER DAY ===
 function setupRandomDailyTriggers() {
-  // Видаляємо старі тригери
+  // We delete old triggers
   var triggers = ScriptApp.getProjectTriggers();
   triggers.forEach(function(trigger) {
     ScriptApp.deleteTrigger(trigger);
   });
 
-  // Випадковий час для першого запуску (між 9:00 і 12:00)
+  // Random time for first launch (between 9am and 12pm)
   var morningHour = Math.floor(Math.random() * 3) + 9; // 9-11
   var morningMinute = Math.floor(Math.random() * 60);
 
-  // Випадковий час для другого запуску (між 17:00 і 20:00)
+  // Random time for second launch (between 5:00 PM and 8:00 PM)
   var eveningHour = Math.floor(Math.random() * 3) + 17; // 17-19
   var eveningMinute = Math.floor(Math.random() * 60);
 
-  // Тригер 1
+  // Trigger 1
   ScriptApp.newTrigger('pingWebsite')
     .timeBased()
     .atHour(morningHour)
@@ -39,7 +39,7 @@ function setupRandomDailyTriggers() {
     .everyDays(1)
     .create();
 
-  // Тригер 2
+  // Trigger 2
   ScriptApp.newTrigger('pingWebsite')
     .timeBased()
     .atHour(eveningHour)
@@ -47,6 +47,6 @@ function setupRandomDailyTriggers() {
     .everyDays(1)
     .create();
 
-  Logger.log("Ранковий запуск: " + morningHour + ":" + morningMinute);
-  Logger.log("Вечірній запуск: " + eveningHour + ":" + eveningMinute);
+  Logger.log("Morning launch: " + morningHour + ":" + morningMinute);
+  Logger.log("Evening launch: " + eveningHour + ":" + eveningMinute);
 }
